@@ -23,6 +23,17 @@ export default function TextForm(props) {
     setText("");
     props.showAlert(`Text cleared`, `success`)
   };
+  
+  const handleCopyClick = () => {
+    document.getElementById('myBox').setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(document.getElementById('myBox').value);
+    props.showAlert(`Text copied`, `success`);
+  }
+  
+  // const handlePasteClick = () => {
+  //   document.querySelector('textarea').value += navigator.clipboard.readText();
+  //   props.showAlert(`Text pasted`, `success`);
+  // }
 
   const handleOnChange = (event) => {
     // console.log(`Text was chnaged!`);
@@ -58,6 +69,12 @@ export default function TextForm(props) {
       <button className="btn btn-primary m-3" onClick={handleLowercaseClick}>
         Convert to Lowercase
       </button>
+      <button className="btn btn-primary" onClick={handleCopyClick}>
+        Copy to clipboard
+      </button>
+      {/* <button className="btn btn-primary m-3" onClick={handlePasteClick}>
+        Paste
+      </button> */}
       <button className="btn btn-primary" onClick={handleResetClick}>
         Reset
       </button>
