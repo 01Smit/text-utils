@@ -25,8 +25,7 @@ export default function TextForm(props) {
   };
   
   const handleCopyClick = () => {
-    document.getElementById('myBox').setSelectionRange(0, 99999);
-    navigator.clipboard.writeText(document.getElementById('myBox').value);
+    navigator.clipboard.writeText(text);
     props.showAlert(`Text copied`, `success`);
   }
   
@@ -46,7 +45,6 @@ export default function TextForm(props) {
 
   return (
     <>
-    
     <div className="container" >
       <div className="TextArea">
         <label htmlFor="myBox" className="form-label" style={{color: props.mode === 'light' ? 'black' : 'white'}}>
@@ -63,27 +61,27 @@ export default function TextForm(props) {
           style={{backgroundColor: props.mode === 'light' ? 'white' : 'grey', color: props.mode === 'light' ? 'black' : 'white'}}
         ></textarea>
       </div>
-      <button className="btn btn-primary my-3" onClick={handleUppercaseClick}>
+      <button disabled={text.length===0} className="btn btn-primary mx-1 my-2" onClick={handleUppercaseClick}>
         Convert to Uppercase
       </button>
-      <button className="btn btn-primary m-3" onClick={handleLowercaseClick}>
+      <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleLowercaseClick}>
         Convert to Lowercase
       </button>
-      <button className="btn btn-primary" onClick={handleCopyClick}>
+      <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleCopyClick}>
         Copy to clipboard
+      </button>
+      <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleResetClick}>
+        Reset
       </button>
       {/* <button className="btn btn-primary m-3" onClick={handlePasteClick}>
         Paste
       </button> */}
-      <button className="btn btn-primary" onClick={handleResetClick}>
-        Reset
-      </button>
     </div>
     <div className="container" style={{color: props.mode === 'light' ? 'black' : 'white'}}>
       <h3>Text Summary</h3>
-      <p>{text === '' ? `0 words and 0 characters.` : `${text.split(" ").length} words and ${text.length} characters.`}</p>
+      <p>{text.split(/\s/).filter((element)=>{return element.length!==0}).length} words and {text.length} characters.</p>
       <h3>Preview</h3>
-      <p>{text.length>0?text:`Enter something to preview it here`}</p>
+      <p>{text.length>0?text:`Nothing to preview!!`}</p>
     </div>
     </>
   );
